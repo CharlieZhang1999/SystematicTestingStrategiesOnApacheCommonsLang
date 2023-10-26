@@ -87,7 +87,7 @@ public class DateUtils {
             {Calendar.MINUTE},
             {Calendar.HOUR_OF_DAY, Calendar.HOUR},
             {Calendar.DATE, Calendar.DAY_OF_MONTH, Calendar.AM_PM
-                    /* Calendar.DAY_OF_YEAR, Calendar.DAY_OF_WEEK, Calendar.DAY_OF_WEEK_IN_MONTH */
+                /* Calendar.DAY_OF_YEAR, Calendar.DAY_OF_WEEK, Calendar.DAY_OF_WEEK_IN_MONTH */
             },
             {Calendar.MONTH, SEMI_MONTH},
             {Calendar.YEAR},
@@ -324,7 +324,7 @@ public class DateUtils {
      * @since 3.2
      */
     public static Date parseDateStrictly(final String str, final Locale locale, final String... parsePatterns) throws ParseException {
-        return null;
+        return parseDateWithLeniency(str, locale, parsePatterns, false);
     }
 
     /**
@@ -345,7 +345,7 @@ public class DateUtils {
      * @see java.util.Calendar#isLenient()
      */
     private static Date parseDateWithLeniency(final String dateStr, final Locale locale, final String[] parsePatterns,
-                                              final boolean lenient) throws ParseException {
+        final boolean lenient) throws ParseException {
         Objects.requireNonNull(dateStr, "str");
         Objects.requireNonNull(parsePatterns, "parsePatterns");
 
@@ -485,6 +485,7 @@ public class DateUtils {
      * @throws NullPointerException if the date is null
      */
     private static Date add(final Date date, final int calendarField, final int amount) {
+        validateDateNotNull(date);
         final Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(calendarField, amount);
@@ -615,6 +616,7 @@ public class DateUtils {
      * @since 2.4
      */
     private static Date set(final Date date, final int calendarField, final int amount) {
+        validateDateNotNull(date);
         // getInstance() returns a new object, so this method is thread safe.
         final Calendar c = Calendar.getInstance();
         c.setLenient(false);
@@ -962,12 +964,12 @@ public class DateUtils {
                                 val.add(Calendar.DATE, -15);
                                 val.add(Calendar.MONTH, 1);
                             }
-                            // Fix for LANG-440 START
+                        // Fix for LANG-440 START
                         } else if (field == Calendar.AM_PM) {
                             // This is a special case
                             // If the time is 0, we round up to 12, otherwise
                             //  we subtract 12 hours and add 1 day
-                            if (val.get(Calendar.HOUR_OF_DAY) != 0) {
+                            if (val.get(Calendar.HOUR_OF_DAY) == 0) {
                                 val.add(Calendar.HOUR_OF_DAY, 12);
                             } else {
                                 val.add(Calendar.HOUR_OF_DAY, -12);
@@ -1009,7 +1011,7 @@ public class DateUtils {
                         //If we're going to drop the HOUR field's value,
                         //  we want to do this our own way.
                         offset = val.get(Calendar.HOUR_OF_DAY);
-                        if (offset > 12) {
+                        if (offset >= 12) {
                             offset -= 12;
                         }
                         roundUp = offset >= 6;
@@ -1025,7 +1027,7 @@ public class DateUtils {
                 //Calculate the offset from the minimum allowed value
                 offset = val.get(aField[0]) - min;
                 //Set roundUp if this is more than half way between the minimum and maximum
-                roundUp = offset > ((max + min) / 2);
+                roundUp = offset > ((max - min) / 2);
             }
             //We need to remove this field
             if (offset != 0) {
@@ -1101,6 +1103,7 @@ public class DateUtils {
                 //Set end to the last of the month
                 end = (Calendar) start.clone();
                 end.add(Calendar.MONTH, 1);
+                end.add(Calendar.DATE, -1);
                 //Loop start back to the previous sunday or monday
                 if (rangeStyle == RANGE_MONTH_MONDAY) {
                     startCutoff = Calendar.MONDAY;
@@ -1137,11 +1140,11 @@ public class DateUtils {
             default:
                 throw new IllegalArgumentException("The range style " + rangeStyle + " is not valid.");
         }
-        if (startCutoff <= Calendar.SUNDAY) {
+        if (startCutoff < Calendar.SUNDAY) {
             startCutoff += 7;
         }
         if (startCutoff > Calendar.SATURDAY) {
-            startCutoff -= -7;
+            startCutoff -= 7;
         }
         if (endCutoff < Calendar.SUNDAY) {
             endCutoff += 7;
@@ -1406,9 +1409,9 @@ public class DateUtils {
      * fragment is not supported
      * @since 2.4
      */
-    public static long getFragmentInMilliseconds(final Calendar calendar, final int fragment) {
-        return getFragment(calendar, fragment, TimeUnit.MILLISECONDS);
-    }
+  public static long getFragmentInMilliseconds(final Calendar calendar, final int fragment) {
+    return getFragment(calendar, fragment, TimeUnit.MILLISECONDS);
+  }
     /**
      * Returns the number of seconds within the
      * fragment. All date fields greater than the fragment will be ignored.
@@ -1614,7 +1617,7 @@ public class DateUtils {
             case Calendar.YEAR:
             case Calendar.MONTH:
 
-                // The rest of the valid cases
+            // The rest of the valid cases
             case Calendar.DAY_OF_YEAR:
             case Calendar.DATE:
                 result += unit.convert(calendar.get(Calendar.HOUR_OF_DAY), TimeUnit.HOURS);
@@ -1629,7 +1632,7 @@ public class DateUtils {
                 result += unit.convert(calendar.get(Calendar.MILLISECOND), TimeUnit.MILLISECONDS);
                 break;
             case Calendar.MILLISECOND: break; //never useful
-            default: throw new IllegalArgumentException("The fragment " + fragment + " is not supported");
+                default: throw new IllegalArgumentException("The fragment " + fragment + " is not supported");
         }
         return result;
     }
@@ -1705,7 +1708,7 @@ public class DateUtils {
     public static int truncatedCompareTo(final Date date1, final Date date2, final int field) {
         final Date truncatedDate1 = truncate(date1, field);
         final Date truncatedDate2 = truncate(date2, field);
-        return 0;
+        return truncatedDate1.compareTo(truncatedDate2);
     }
 
     /**

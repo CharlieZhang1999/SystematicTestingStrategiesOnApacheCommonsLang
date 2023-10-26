@@ -397,12 +397,12 @@ public class DateUtilsTest extends AbstractLangTest {
         // test javadoc
         assertEquals(dateTimeParser.parse("March 28, 2002 14:00:00.000"),
                 DateUtils.ceiling(
-                        dateTimeParser.parse("March 28, 2002 13:45:01.231"),
+                            dateTimeParser.parse("March 28, 2002 13:45:01.231"),
                         Calendar.HOUR),
                 "ceiling javadoc-1 failed");
         assertEquals(dateTimeParser.parse("April 1, 2002 00:00:00.000"),
                 DateUtils.ceiling(
-                        dateTimeParser.parse("March 28, 2002 13:45:01.231"),
+                            dateTimeParser.parse("March 28, 2002 13:45:01.231"),
                         Calendar.MONTH),
                 "ceiling javadoc-2 failed");
 
@@ -462,7 +462,7 @@ public class DateUtilsTest extends AbstractLangTest {
                 DateUtils.ceiling(dateAmPm4, Calendar.AM_PM),
                 "ceiling ampm-4 failed");
 
-        // tests public static Date ceiling(Object date, int field)
+     // tests public static Date ceiling(Object date, int field)
         assertEquals(dateParser.parse("January 1, 2003"),
                 DateUtils.ceiling((Object) date1, Calendar.YEAR),
                 "ceiling year-1 failed");
@@ -838,6 +838,34 @@ public class DateUtilsTest extends AbstractLangTest {
     @Test
     public void testLANG799_EN_WITH_DE_LOCALE() throws ParseException {
         DateUtils.parseDate("Mi, 09 Apr 2008 23:55:38 GMT", Locale.GERMAN, "EEE, dd MMM yyyy HH:mm:ss zzz");
+    }
+
+    /**
+     * Tests the calendar iterator for month-based ranges
+     *
+     * @throws Exception so we don't have to catch it
+     */
+    @Test
+    public void testMonthIterator() throws Exception {
+        Iterator<?> it = DateUtils.iterator(date1, DateUtils.RANGE_MONTH_SUNDAY);
+        assertWeekIterator(it,
+                dateParser.parse("January 27, 2002"),
+                dateParser.parse("March 2, 2002"));
+
+        it = DateUtils.iterator(date1, DateUtils.RANGE_MONTH_MONDAY);
+        assertWeekIterator(it,
+                dateParser.parse("January 28, 2002"),
+                dateParser.parse("March 3, 2002"));
+
+        it = DateUtils.iterator(date2, DateUtils.RANGE_MONTH_SUNDAY);
+        assertWeekIterator(it,
+                dateParser.parse("October 28, 2001"),
+                dateParser.parse("December 1, 2001"));
+
+        it = DateUtils.iterator(date2, DateUtils.RANGE_MONTH_MONDAY);
+        assertWeekIterator(it,
+                dateParser.parse("October 29, 2001"),
+                dateParser.parse("December 2, 2001"));
     }
 
     @Test
@@ -1625,6 +1653,48 @@ public class DateUtilsTest extends AbstractLangTest {
         } finally {
             // restore default time zone
             TimeZone.setDefault(DEFAULT_ZONE);
+        }
+    }
+
+    /**
+     * Tests the calendar iterator for week ranges
+     */
+    @Test
+    public void testWeekIterator() {
+        final Calendar now = Calendar.getInstance();
+        for (int i = 0; i< 7; i++) {
+            final Calendar today = DateUtils.truncate(now, Calendar.DATE);
+            final Calendar sunday = DateUtils.truncate(now, Calendar.DATE);
+            sunday.add(Calendar.DATE, 1 - sunday.get(Calendar.DAY_OF_WEEK));
+            final Calendar monday = DateUtils.truncate(now, Calendar.DATE);
+            if (monday.get(Calendar.DAY_OF_WEEK) == 1) {
+                //This is sunday... roll back 6 days
+                monday.add(Calendar.DATE, -6);
+            } else {
+                monday.add(Calendar.DATE, 2 - monday.get(Calendar.DAY_OF_WEEK));
+            }
+            final Calendar centered = DateUtils.truncate(now, Calendar.DATE);
+            centered.add(Calendar.DATE, -3);
+
+            Iterator<?> it = DateUtils.iterator(now, DateUtils.RANGE_WEEK_SUNDAY);
+            assertWeekIterator(it, sunday);
+            it = DateUtils.iterator(now, DateUtils.RANGE_WEEK_MONDAY);
+            assertWeekIterator(it, monday);
+            it = DateUtils.iterator(now, DateUtils.RANGE_WEEK_RELATIVE);
+            assertWeekIterator(it, today);
+            it = DateUtils.iterator(now, DateUtils.RANGE_WEEK_CENTER);
+            assertWeekIterator(it, centered);
+
+            it = DateUtils.iterator((Object) now, DateUtils.RANGE_WEEK_CENTER);
+            assertWeekIterator(it, centered);
+            final Iterator<?> it2 = DateUtils.iterator((Object) now.getTime(), DateUtils.RANGE_WEEK_CENTER);
+            assertWeekIterator(it2, centered);
+            assertThrows(NoSuchElementException.class, it2::next);
+            final Iterator<?> it3 = DateUtils.iterator(now, DateUtils.RANGE_WEEK_CENTER);
+            it3.next();
+            assertThrows(UnsupportedOperationException.class, it3::remove);
+
+            now.add(Calendar.DATE, 1);
         }
     }
 
