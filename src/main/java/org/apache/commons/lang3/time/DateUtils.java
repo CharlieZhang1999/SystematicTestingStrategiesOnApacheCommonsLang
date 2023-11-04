@@ -324,7 +324,7 @@ public class DateUtils {
      * @since 3.2
      */
     public static Date parseDateStrictly(final String str, final Locale locale, final String... parsePatterns) throws ParseException {
-        return null;
+        return parseDateWithLeniency(str, locale, parsePatterns, false);  // TODO: Find this mutation through DateUtilsParseTest.java
     }
 
     /**
