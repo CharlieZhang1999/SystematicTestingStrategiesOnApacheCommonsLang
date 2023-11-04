@@ -1,3 +1,10 @@
+# Team 7
+
+yaokangw, qiuyangz, yhan3, xbo, lifuzhan
+
+[Test Plan](https://docs.google.com/document/d/1cqeY3JRuNKcXXyiz6Qn229q7x0bpnvHsJJtEvwY_l5g)
+
+
 <!---
  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
