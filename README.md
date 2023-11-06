@@ -5,6 +5,12 @@ yaokangw, qiuyangz, yhan3, xbo, lifuzhan
 [Test Plan](https://docs.google.com/document/d/1cqeY3JRuNKcXXyiz6Qn229q7x0bpnvHsJJtEvwY_l5g)
 
 
+Run Jacoco coverage analysis and find coverage report at `target/site/jacoco/index.html`.
+
+```
+mvn clean test -Dtest="org.apache.commons.lang3.time.date.utils.*Test" jacoco:report
+```
+
 <!---
  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
