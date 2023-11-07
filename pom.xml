@@ -644,6 +644,11 @@
    <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.12-SNAPSHOT</version>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
           <version>${commons.pmd.version}</version>
@@ -657,6 +662,7 @@
           <artifactId>apache-rat-plugin</artifactId>
           <configuration>
             <excludes>
+              <exclude>**/*</exclude>
               <exclude>site-content/**</exclude>
               <exclude>src/site/resources/.htaccess</exclude>
               <exclude>src/site/resources/download_lang.cgi</exclude>
@@ -774,6 +780,18 @@
 
   <reporting>
     <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- select non-aggregate reports -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
@@ -935,7 +953,7 @@
       </activation>
       <properties>
         <!-- jacoco does not work with java 13 yet -->
-        <jacoco.skip>true</jacoco.skip>
+<!--        <jacoco.skip>true</jacoco.skip>-->
       </properties>
     </profile>
     <profile>
