@@ -58,6 +58,12 @@ public class DateUtilsIteratorTest extends AbstractLangTest {
     }
 
     @Test
+    public void testIteratorUnsupportedOperationException() throws Exception {
+        beforeTest(RANGE_MONTH_SUNDAY);
+        assertThrows(UnsupportedOperationException.class, () -> calendarIterator.remove());
+    }
+
+    @Test
     public void testIteratorRANGE_MONTH_SUNDAY() throws Exception {
         beforeTest(RANGE_MONTH_SUNDAY);
         assertTrue(dateIterator.hasNext());
