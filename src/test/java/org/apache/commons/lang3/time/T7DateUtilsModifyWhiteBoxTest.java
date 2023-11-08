@@ -69,4 +69,47 @@ public class T7DateUtilsModifyWhiteBoxTest {
         assertEquals(c2.getTime(), date);
     }
 
+    @Test
+    public void roundWithOver280MillionYears() throws ArithmeticException {
+        calendar1.set(300000000, Calendar.FEBRUARY, 3, 13, 10, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+        assertThrows(ArithmeticException.class, () -> DateUtils.round(calendar1, Calendar.MINUTE));
+    }
+
+    @Test
+    public void truncateWithOver280MillionYears() throws ArithmeticException {
+        calendar1.set(300000000, Calendar.FEBRUARY, 3, 13, 10, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+        assertThrows(ArithmeticException.class, () -> DateUtils.truncate(calendar1, Calendar.MINUTE));
+    }
+
+    @Test
+    public void ceilingWithOver280MillionYears() throws ArithmeticException {
+        calendar1.set(300000000, Calendar.FEBRUARY, 3, 13, 10, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+        assertThrows(ArithmeticException.class, () -> DateUtils.ceiling(calendar1, Calendar.MINUTE));
+    }
+
+    @Test
+    public void roundWithoutTruncatingMilliseconds() {
+        calendar1.set(2008, Calendar.FEBRUARY, 3, 13, 10, 0);
+        calendar1.set(Calendar.MILLISECOND, 750);
+        Calendar result = DateUtils.round(calendar1, Calendar.SECOND);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(2008, Calendar.FEBRUARY, 3, 13, 10, 1);
+        calendar2.set(Calendar.MILLISECOND, 0);
+        assertEquals(calendar2, result);
+    }
+
+    @Test
+    public void ceilingWithoutTruncatingMilliseconds() {
+        calendar1.set(2008, Calendar.FEBRUARY, 3, 13, 10, 0);
+        calendar1.set(Calendar.MILLISECOND, 750);
+        Calendar result = DateUtils.ceiling(calendar1, Calendar.SECOND);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(2008, Calendar.FEBRUARY, 3, 13, 10, 1);
+        calendar2.set(Calendar.MILLISECOND, 0);
+        assertEquals(calendar2, result);
+    }
+
 }
