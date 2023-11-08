@@ -1,4 +1,4 @@
-package org.apache.commons.lang3.time.date.utils;
+package org.apache.commons.lang3.time;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;

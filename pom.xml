@@ -968,10 +968,10 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>org/apache/commons/lang3/time/Java15BugFastDateParserTest.java</exclude>               
+                <exclude>org/apache/commons/lang3/time/Java15BugFastDateParserTest.java</exclude>
               </excludes>
             </configuration>
-          </plugin>        
+          </plugin>
         </plugins>
       </build>
     </profile>
