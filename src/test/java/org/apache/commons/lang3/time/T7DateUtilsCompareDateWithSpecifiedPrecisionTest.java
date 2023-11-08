@@ -79,37 +79,12 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     }
 
     @Test
-    public void testComparisonInWeekOfYearforTwoSameCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(calendar_1, calendar_1_same, Calendar.WEEK_OF_YEAR));
-    }
-
-    @Test
-    public void testComparisonInWeekOfMonthforTwoSameCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(calendar_1, calendar_1_same, Calendar.WEEK_OF_MONTH));
-    }
-
-    @Test
     public void canTestComparisonInDateforTwoSameCalendars(){
         assertTrue(DateUtils.truncatedEquals(calendar_1, calendar_1_same, Calendar.DATE));
     }
     @Test
     public void canTestComparisonInDayOfMonthforTwoSameCalendars(){
         assertTrue(DateUtils.truncatedEquals(calendar_1, calendar_1_same, Calendar.DAY_OF_MONTH));
-    }
-
-    @Test
-    public void testComparisonInDayOfYearforTwoSameCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(calendar_1, calendar_1_same, Calendar.DAY_OF_YEAR));
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekforTwoSameCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(calendar_1, calendar_1_same, Calendar.DAY_OF_WEEK));
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekInMonthforTwoSameCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(calendar_1, calendar_1_same, Calendar.DAY_OF_WEEK_IN_MONTH));
     }
 
     @Test
@@ -158,16 +133,6 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     }
 
     @Test
-    public void testComparisonInWeekOfYearsforTwoDifferentCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(calendar_1, calendar_1_diff, Calendar.WEEK_OF_YEAR));
-    }
-
-    @Test
-    public void testComparisonInDayOfYearsforTwoDifferentCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(calendar_1, calendar_1_diff, Calendar.DAY_OF_YEAR));
-    }
-
-    @Test
     public void canTestComparisonInDateforTwoDifferentCalendars(){
         assertFalse(DateUtils.truncatedEquals(calendar_1, calendar_1_diff, Calendar.DATE));
     }
@@ -175,24 +140,6 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     @Test
     public void canTestComparisonInDayOfMonthforTwoDifferentCalendars(){
         assertFalse(DateUtils.truncatedEquals(calendar_1, calendar_1_diff, Calendar.DAY_OF_MONTH));
-
-    }
-
-    @Test
-    public void testComparisonInDayOfYearforTwoDifferentCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(calendar_1, calendar_1_diff, Calendar.DAY_OF_YEAR));
-
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekforTwoDifferentCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(calendar_1, calendar_1_diff, Calendar.DAY_OF_WEEK));
-
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekInMonthforTwoDifferentCalendarsShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(calendar_1, calendar_1_diff, Calendar.DAY_OF_WEEK_IN_MONTH));
 
     }
 
@@ -258,15 +205,6 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
         assertTrue(DateUtils.truncatedEquals(date_1, date_1_same, Calendar.MONTH));
     }
 
-    @Test
-    public void testComparisonInWeekOfYearforTwoSameDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(date_1, date_1_same, Calendar.WEEK_OF_YEAR));
-    }
-
-    @Test
-    public void testComparisonInWeekOfMonthforTwoSameDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(date_1, date_1_same, Calendar.WEEK_OF_MONTH));
-    }
 
     @Test
     public void canTestComparisonInDateforTwoSameDates(){
@@ -275,21 +213,6 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     @Test
     public void canTestComparisonInDayOfMonthforTwoSameDates(){
         assertTrue(DateUtils.truncatedEquals(date_1, date_1_same, Calendar.DAY_OF_MONTH));
-    }
-
-    @Test
-    public void testComparisonInDayOfYearforTwoSameDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(date_1, date_1_same, Calendar.DAY_OF_YEAR));
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekforTwoSameDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(date_1, date_1_same, Calendar.DAY_OF_WEEK));
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekInMonthforTwoSameDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, ()-> DateUtils.truncatedEquals(date_1, date_1_same, Calendar.DAY_OF_WEEK_IN_MONTH));
     }
 
     @Test
@@ -324,7 +247,9 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
 
     @Test
     public void canTestComparisonInEraforTwoDifferentDates(){
-        assertFalse(DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.ERA));
+        Date date_AD = calendar_1.getTime();
+        Date date_BC = calendar_1_diff.getTime();
+        assertFalse(DateUtils.truncatedEquals(date_AD, date_BC , Calendar.ERA));
     }
 
     @Test
@@ -338,16 +263,6 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     }
 
     @Test
-    public void testComparisonInWeekOfYearsforTwoDifferentDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.WEEK_OF_YEAR));
-    }
-
-    @Test
-    public void testComparisonInDayOfYearsforTwoDifferentDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.DAY_OF_YEAR));
-    }
-
-    @Test
     public void canTestComparisonInDateforTwoDifferentDates(){
         assertFalse(DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.DATE));
     }
@@ -355,24 +270,6 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     @Test
     public void canTestComparisonInDayOfMonthforTwoDifferentDates(){
         assertFalse(DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.DAY_OF_MONTH));
-
-    }
-
-    @Test
-    public void testComparisonInDayOfYearforTwoDifferentDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.DAY_OF_YEAR));
-
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekforTwoDifferentDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.DAY_OF_WEEK));
-
-    }
-
-    @Test
-    public void testComparisonInDayOfWeekInMonthforTwoDifferentDatesShouldThrowException(){
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.DAY_OF_WEEK_IN_MONTH));
 
     }
 

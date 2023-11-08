@@ -16,9 +16,15 @@ public class T7DateUtilsModifyWhiteBoxTest {
 
     @Test
     public void canCeilTheCalendarBySemiMonth(){
-        calendar1.set(2001, 11, 1, 1, 43, 41 );
+        calendar1.set(2001, Calendar.NOVEMBER, 1, 1, 43, 41 );
         calendar1.set(Calendar.MILLISECOND, 560);
-        DateUtils.ceiling(calendar1, DateUtils.SEMI_MONTH);
+        Date date1 = calendar1.getTime();
+        Date date = DateUtils.ceiling(calendar1.getTime(), DateUtils.SEMI_MONTH);
+
+        Calendar c2 = Calendar.getInstance();
+        c2.set(2001, Calendar.NOVEMBER, 16, 0, 0, 0 );
+        c2.set(Calendar.MILLISECOND, 0);
+        assertEquals(c2.getTime(), date);
     }
 
     @Test

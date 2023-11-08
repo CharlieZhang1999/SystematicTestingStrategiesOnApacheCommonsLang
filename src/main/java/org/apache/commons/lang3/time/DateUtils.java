@@ -31,7 +31,7 @@ import org.apache.commons.lang3.LocaleUtils;
 
 /**
  * A suite of utilities surrounding the use of the
- * {@link java.util.Calendar} and {@link java.util.Date} object.
+ * {@link Calendar} and {@link Date} object.
  *
  * <p>DateUtils contains a lot of common methods considering manipulations
  * of Dates or Calendars. Some methods require some extra explanation.
@@ -342,7 +342,7 @@ public class DateUtils {
      * @return the parsed date
      * @throws NullPointerException if the date string or pattern array is null
      * @throws ParseException if none of the date patterns were suitable
-     * @see java.util.Calendar#isLenient()
+     * @see Calendar#isLenient()
      */
     private static Date parseDateWithLeniency(final String dateStr, final Locale locale, final String[] parsePatterns,
                                               final boolean lenient) throws ParseException {
@@ -1763,7 +1763,7 @@ public class DateUtils {
          * Always throws UnsupportedOperationException.
          *
          * @throws UnsupportedOperationException Always thrown.
-         * @see java.util.Iterator#remove()
+         * @see Iterator#remove()
          */
         @Override
         public void remove() {
