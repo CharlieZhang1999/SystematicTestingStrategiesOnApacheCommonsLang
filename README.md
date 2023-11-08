@@ -1,14 +1,37 @@
 # Team 7
 
-yaokangw, qiuyangz, yhan3, xbo, lifuzhan
 
-[Test Plan](https://docs.google.com/document/d/1cqeY3JRuNKcXXyiz6Qn229q7x0bpnvHsJJtEvwY_l5g)
+## Members
 
+- Yaokang Wu (yaokangw)
+
+- Qiuyang Zhang (qiuyangz)
+
+- Lifu Zhang (lifuzhan)
+
+- Xichen Bo (xbo)
+
+- Yu Han (yhan3)
+
+
+## Docs
+
+- [Test Plan](https://docs.google.com/document/d/1cqeY3JRuNKcXXyiz6Qn229q7x0bpnvHsJJtEvwY_l5g)
+
+- [White Box Test Sheet](https://docs.google.com/spreadsheets/d/1AZCybQBo1rCgzekvzG533E8CLYLlzwu6wSultHubhpc/edit#gid=690192691)
+
+- [Mutation Sheet](https://docs.google.com/spreadsheets/d/1k7Yz3OSn3nktseqHQjh5-1MvdnFL0haJCJjaWX225xg/edit#gid=0)
+
+- [Presentation](https://docs.google.com/presentation/d/1HQ0kP375IJ7kzYWVQK-u0qAMzb_YbHvZvs5Y3xvyfY8/edit?pli=1#slide=id.p)
+
+- [Project Shared Board](https://docs.google.com/spreadsheets/d/1Vhd3tgtV3PP3b9xVShLIp9ZC0sAhp9oXFeUV5Gud770/edit#gid=1863369920)
+
+## Jacoco
 
 Run Jacoco coverage analysis and find coverage report at `target/site/jacoco/index.html`.
 
 ```
-mvn clean test -Dtest="org.apache.commons.lang3.time.date.utils.*Test" jacoco:report
+mvn clean test -Dtest="org.apache.commons.lang3.time.T7*Test" jacoco:report
 ```
 
 <!---
