@@ -14,7 +14,7 @@ import java.util.TimeZone;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DateUtilsConvertToCalendarTest {
+public class T7DateUtilsConvertToCalendarTest {
     private static TimeZone DEFAULT_ZONE;
     private static Calendar calendar_1;
     private static Date date_1;

@@ -7,13 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.GregorianCalendar;
-public class DateUtilsCompareDateWithSpecifiedPrecisionTest {
+public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     private static Calendar calendar_1;
     private static Calendar calendar_1_same;
     private static Calendar calendar_1_diff;

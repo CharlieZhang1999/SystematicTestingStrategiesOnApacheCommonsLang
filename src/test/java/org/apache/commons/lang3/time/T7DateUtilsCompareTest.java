@@ -10,7 +10,7 @@ import java.text.DateFormat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-public class DateUtilsCompareTest {
+public class T7DateUtilsCompareTest {
     private static Calendar calendar_1;
     private static Calendar calendar_1_same;
     private static Calendar calendar_1_diff;

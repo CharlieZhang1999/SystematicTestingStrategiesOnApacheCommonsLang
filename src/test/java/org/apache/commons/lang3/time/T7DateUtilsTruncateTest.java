@@ -1,6 +1,5 @@
 package org.apache.commons.lang3.time;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ import java.util.TimeZone;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DateUtilsRoundTest {
+public class T7DateUtilsTruncateTest {
     private static final TimeZone DEFAULT_ZONE = TimeZone.getTimeZone("GMT");
 
     private static Object cal1, cal2;
@@ -35,38 +34,17 @@ public class DateUtilsRoundTest {
 
     @Test
     public void roundsDownACalendarToMinute() {
-        Date result = DateUtils.round(cal1, field);
-        assertEquals(((Calendar) cal2).getTime(), result);
-    }
-
-    @Test
-    public void roundsUpACalendarToMinuteButDoesNotChangeHigherFields() {
-        ((Calendar) cal1).set(2008, Calendar.DECEMBER, 31, 23, 59, 20);
-
-        ((Calendar) cal2).set(2008, Calendar.DECEMBER, 31, 23, 59, 0);
-
-        Date result = DateUtils.round(cal1, field);
-        assertEquals(((Calendar) cal2).getTime(), result);
-    }
-
-    @Test
-    public void roundsUpACalendarToMinuteAndChangesHigherFields() {
-        ((Calendar) cal1).set(2008, Calendar.DECEMBER, 31, 23, 59, 45);
-
-        ((Calendar) cal2).set(2009, Calendar.JANUARY, 1, 0, 0, 0);
-
-        Date result = DateUtils.round(cal1, field);
+        Date result = DateUtils.truncate(cal1, field);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
     @Test
     public void roundsACalendarToMinuteButChangesNothing() {
         ((Calendar) cal1).set(2008, Calendar.APRIL, 9, 23, 55, 0);
-        ((Calendar) cal1).set(Calendar.MILLISECOND, 0);
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 23, 55, 0);
 
-        Date result = DateUtils.round(cal1, field);
+        Date result = DateUtils.truncate(cal1, field);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -75,7 +53,7 @@ public class DateUtilsRoundTest {
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 23, 55, 27);
         ((Calendar) cal2).set(Calendar.MILLISECOND, 25);
 
-        Date result = DateUtils.round(cal1, Calendar.MILLISECOND);
+        Date result = DateUtils.truncate(cal1, Calendar.MILLISECOND);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -83,7 +61,7 @@ public class DateUtilsRoundTest {
     public void roundsDownACalendarToSecond() {
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 23, 55, 27);
 
-        Date result = DateUtils.round(cal1, Calendar.SECOND);
+        Date result = DateUtils.truncate(cal1, Calendar.SECOND);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -93,7 +71,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 23, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.HOUR_OF_DAY);
+        Date result = DateUtils.truncate(cal1, Calendar.HOUR_OF_DAY);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -103,7 +81,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 23, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.HOUR);
+        Date result = DateUtils.truncate(cal1, Calendar.HOUR);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -113,7 +91,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 0, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.DATE);
+        Date result = DateUtils.truncate(cal1, Calendar.DATE);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -123,7 +101,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 0, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.DAY_OF_MONTH);
+        Date result = DateUtils.truncate(cal1, Calendar.DAY_OF_MONTH);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -133,7 +111,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 9, 0, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.AM_PM);
+        Date result = DateUtils.truncate(cal1, Calendar.AM_PM);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -143,7 +121,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 1, 0, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.MONTH);
+        Date result = DateUtils.truncate(cal1, Calendar.MONTH);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -153,7 +131,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.APRIL, 16, 0, 0, 0);
 
-        Date result = DateUtils.round(cal1, DateUtils.SEMI_MONTH);
+        Date result = DateUtils.truncate(cal1, DateUtils.SEMI_MONTH);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -163,7 +141,7 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(2008, Calendar.JANUARY, 1, 0, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.YEAR);
+        Date result = DateUtils.truncate(cal1, Calendar.YEAR);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
@@ -173,28 +151,28 @@ public class DateUtilsRoundTest {
 
         ((Calendar) cal2).set(1, Calendar.JANUARY, 1, 0, 0, 0);
 
-        Date result = DateUtils.round(cal1, Calendar.ERA);
+        Date result = DateUtils.truncate(cal1, Calendar.ERA);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
     @Test
     public void roundsDownACalendarToInvalidField() throws IllegalArgumentException {
-        assertThrows(IllegalArgumentException.class, () -> DateUtils.round(cal1, -1234));
+        assertThrows(IllegalArgumentException.class, () -> DateUtils.truncate(cal1, -1234));
     }
 
     @Test
     public void roundsDownADateToMinute() {
-        Date result = DateUtils.round(((Calendar) cal1).getTime(), Calendar.MINUTE);
+        Date result = DateUtils.truncate(((Calendar) cal1).getTime(), Calendar.MINUTE);
         assertEquals(((Calendar) cal2).getTime(), result);
     }
 
     @Test
     public void roundsDownANullObjectToMinute() throws NullPointerException {
-        assertThrows(NullPointerException.class, () -> DateUtils.round((Object) null, Calendar.MINUTE));
+        assertThrows(NullPointerException.class, () -> DateUtils.truncate((Object) null, Calendar.MINUTE));
     }
 
     @Test
     public void roundsDownAnUnsupportedTypeToMinute() throws ClassCastException {
-        assertThrows(ClassCastException.class, () -> DateUtils.round("Wed, 09 Apr 2008 23:55:38 GMT", Calendar.MINUTE));
+        assertThrows(ClassCastException.class, () -> DateUtils.truncate("Wed, 09 Apr 2008 23:55:38 GMT", Calendar.MINUTE));
     }
 }

@@ -12,8 +12,7 @@ import java.util.TimeZone;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class DateUtilsParseTest {
-
+public class T7DateUtilsParseTest {
 
     private static final TimeZone DEFAULT_ZONE = TimeZone.getTimeZone("GMT");
     private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;

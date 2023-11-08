@@ -9,10 +9,9 @@ import java.util.Iterator;
 import java.util.concurrent.*;
 
 import org.apache.commons.lang3.AbstractLangTest;
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.Test;
 
-public class DateUtilsIteratorTest extends AbstractLangTest {
+public class T7DateUtilsIteratorTest extends AbstractLangTest {
     private static Date aDate;
     private static Calendar aCalendar;
     private static Calendar finalDate;

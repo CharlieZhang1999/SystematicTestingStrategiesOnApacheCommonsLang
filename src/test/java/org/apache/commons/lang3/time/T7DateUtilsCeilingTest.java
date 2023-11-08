@@ -1,6 +1,5 @@
 package org.apache.commons.lang3.time;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ import java.util.TimeZone;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DateUtilsCeilingTest {
+public class T7DateUtilsCeilingTest {
     private static final TimeZone DEFAULT_ZONE = TimeZone.getTimeZone("GMT");
 
     private static Object cal1, cal2;

@@ -10,7 +10,7 @@ import org.apache.commons.lang3.AbstractLangTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class DateUtilsFragmentTest extends AbstractLangTest {
+public class T7DateUtilsFragmentTest extends AbstractLangTest {
 
     private static final int months = 1;   // second final prime before 12
     private static final int days = 1;    // second final prime before 31 (and valid)
