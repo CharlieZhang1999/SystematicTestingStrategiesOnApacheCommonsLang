@@ -15,7 +15,7 @@ public class T7DateUtilsModifyWhiteBoxTest {
     }
 
     @Test
-    public void canCeilTheCalendarBySemiMonth(){
+    public void canCeilTheCalendarWithDateEquals1BySemiMonth(){
         calendar1.set(2001, Calendar.NOVEMBER, 1, 1, 43, 41 );
         calendar1.set(Calendar.MILLISECOND, 560);
         Date date1 = calendar1.getTime();
@@ -27,6 +27,31 @@ public class T7DateUtilsModifyWhiteBoxTest {
         assertEquals(c2.getTime(), date);
     }
 
+    @Test
+    public void canRoundDownTheCalendarWithDateEquals1BySemiMonth(){
+        calendar1.set(2001, Calendar.NOVEMBER, 1, 1, 43, 41 );
+        calendar1.set(Calendar.MILLISECOND, 560);
+        Date date1 = calendar1.getTime();
+        Date date = DateUtils.round(calendar1.getTime(), DateUtils.SEMI_MONTH);
+
+        Calendar c2 = Calendar.getInstance();
+        c2.set(2001, Calendar.NOVEMBER, 1, 0, 0, 0 );
+        c2.set(Calendar.MILLISECOND, 0);
+        assertEquals(c2.getTime(), date);
+    }
+
+    @Test
+    public void canTruncateTheCalendarWithDateEquals1BySemiMonth(){
+        calendar1.set(2001, Calendar.NOVEMBER, 1, 1, 43, 41 );
+        calendar1.set(Calendar.MILLISECOND, 560);
+        Date date1 = calendar1.getTime();
+        Date date = DateUtils.truncate(calendar1.getTime(), DateUtils.SEMI_MONTH);
+
+        Calendar c2 = Calendar.getInstance();
+        c2.set(2001, Calendar.NOVEMBER, 1, 0, 0, 0 );
+        c2.set(Calendar.MILLISECOND, 0);
+        assertEquals(c2.getTime(), date);
+    }
     @Test
     public void canRound11AMTo12PMByAMPM() {
         calendar1.set(2002, Calendar.FEBRUARY, 3, 11, 10, 0);
