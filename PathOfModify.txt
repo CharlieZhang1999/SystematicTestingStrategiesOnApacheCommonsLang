@@ -1,0 +1,218 @@
+    /**
+     * Internal calculation method.
+     *
+     * @param val  the calendar, not null
+     * @param field  the field constant
+     * @param modType  type to truncate, round or ceiling
+     * @return the given calendar
+     * @throws ArithmeticException if the year is over 280 million
+     */
+    private static Calendar modify(final Calendar val, final int field, final ModifyType modType) {
+        System.out.print("Path: ");
+        if (val.get(Calendar.YEAR) > 280000000) {
+            System.out.print("1");
+            throw new ArithmeticException("Calendar value too large for accurate calculations");
+        } else {
+            System.out.print("2");
+        }
+
+        if (field == Calendar.MILLISECOND) {
+            System.out.print(" -> 3");
+            return val;
+        } else {
+            System.out.print(" -> 4");
+        }
+
+        // Fix for LANG-59 START
+        // see https://issues.apache.org/jira/browse/LANG-59
+        //
+        // Manually truncate milliseconds, seconds and minutes, rather than using
+        // Calendar methods.
+
+        final Date date = val.getTime();
+        long time = date.getTime();
+        boolean done = false;
+        System.out.print(" -> 5");
+
+        // truncate milliseconds
+        final int millisecs = val.get(Calendar.MILLISECOND);
+        if (ModifyType.TRUNCATE == modType || millisecs < 500) {
+            System.out.print(" -> 6");
+            time = time - millisecs;
+            System.out.print(" -> 7");
+        } else {
+            System.out.print(" -> 8");
+        }
+        if (field == Calendar.SECOND) {
+            System.out.print(" -> 9");
+            done = true;
+            System.out.print(" -> 10");
+        } else {
+            System.out.print(" -> 11");
+        }
+
+        System.out.print(" -> 12");
+        // truncate seconds
+        final int seconds = val.get(Calendar.SECOND);
+        if (!done && (ModifyType.TRUNCATE == modType || seconds < 30)) {
+            System.out.print(" -> 13");
+            time = time - (seconds * 1000L);
+            System.out.print(" -> 14");
+        } else {
+            System.out.print(" -> 15");
+        }
+        if (field == Calendar.MINUTE) {
+            System.out.print(" -> 16");
+            done = true;
+            System.out.print(" -> 17");
+        } else {
+            System.out.print(" -> 18");
+        }
+
+        System.out.print(" -> 19");
+        // truncate minutes
+        final int minutes = val.get(Calendar.MINUTE);
+        if (!done && (ModifyType.TRUNCATE == modType || minutes < 30)) {
+            System.out.print(" -> 20");
+            time = time - (minutes * 60000L);
+            System.out.print(" -> 21");
+        } else {
+            System.out.print(" -> 22");
+        }
+
+        // reset time
+        if (date.getTime() != time) {
+            System.out.print(" -> 23");
+            date.setTime(time);
+            val.setTime(date);
+            System.out.print(" -> 24");
+        } else {
+            System.out.print(" -> 25");
+        }
+
+        // Fix for LANG-59 END
+
+        boolean roundUp = false;
+        System.out.print(" -> 26");
+        for (final int[] aField : fields) {
+            System.out.print(" -> 27");
+            for (final int element : aField) {
+                System.out.print(" -> 29");
+                if (element == field) {
+                    System.out.print(" -> 32");
+                    //This is our field... we stop looping
+                    if (modType == ModifyType.CEILING || modType == ModifyType.ROUND && roundUp) {
+                        System.out.print(" -> 34");
+                        if (field == SEMI_MONTH) {
+                            System.out.print(" -> 35");
+                            //This is a special case that's hard to generalize
+                            //If the date is 1, we round up to 16, otherwise
+                            //  we subtract 15 days and add 1 month
+                            if (val.get(Calendar.DATE) == 1) {
+                                System.out.print(" -> 38");
+                                val.add(Calendar.DATE, 15);
+                                System.out.print(" -> 39");
+                            } else {
+                                System.out.print(" -> 37");
+                                val.add(Calendar.DATE, -15);
+                                val.add(Calendar.MONTH, 1);
+                                System.out.print(" -> 40");
+                            }
+                            // Fix for LANG-440 START
+                        } else if (field == Calendar.AM_PM) {
+                            System.out.print(" -> 36");
+                            System.out.print(" -> 43");
+                            // This is a special case
+                            // If the time is 0, we round up to 12, otherwise
+                            //  we subtract 12 hours and add 1 day
+                            if (val.get(Calendar.HOUR_OF_DAY) != 0) {
+                                System.out.print(" -> 44");
+                                val.add(Calendar.HOUR_OF_DAY, 12);
+                                System.out.print(" -> 45");
+                            } else {
+                                System.out.print(" -> 46");
+                                val.add(Calendar.HOUR_OF_DAY, -12);
+                                val.add(Calendar.DATE, 1);
+                                System.out.print(" -> 47");
+                            }
+                            // Fix for LANG-440 END
+                        } else {
+                            System.out.print(" -> 36");
+                            System.out.print(" -> 41");
+                            //We need at add one to this field since the
+                            //  last number causes us to round up
+                            val.add(aField[0], 1);
+                            System.out.print(" -> 42");
+                        }
+                    } else {
+                        System.out.print(" -> 33");
+                    }
+                    return val;
+                } else {
+                    System.out.print(" -> 31");
+                }
+            }
+            //We have various fields that are not easy roundings
+            int offset = 0;
+            boolean offsetSet = false;
+            //These are special types of fields that require different rounding rules
+            System.out.print(" -> 30");
+            switch (field) {
+                case SEMI_MONTH:
+                    System.out.print(" -> 50");
+                    if (aField[0] == Calendar.DATE) {
+                        //If we're going to drop the DATE field's value,
+                        //  we want to do this our own way.
+                        //We need to subtract 1 since the date has a minimum of 1
+                        offset = val.get(Calendar.DATE) - 1;
+                        //If we're above 15 days adjustment, that means we're in the
+                        //  bottom half of the month and should stay accordingly.
+                        if (offset >= 15) {
+                            offset -= 15;
+                        }
+                        //Record whether we're in the top or bottom half of that range
+                        roundUp = offset > 7;
+                        offsetSet = true;
+                    }
+                    break;
+                case Calendar.AM_PM:
+                    System.out.print(" -> 49");
+                    if (aField[0] == Calendar.HOUR_OF_DAY) {
+                        //If we're going to drop the HOUR field's value,
+                        //  we want to do this our own way.
+                        offset = val.get(Calendar.HOUR_OF_DAY);
+                        if (offset > 12) {
+                            offset -= 12;
+                        }
+                        roundUp = offset >= 6;
+                        offsetSet = true;
+                    }
+                    break;
+                default:
+                    System.out.print(" -> 48");
+                    break;
+            }
+            if (!offsetSet) {
+                System.out.print(" -> 67");
+                final int min = val.getActualMinimum(aField[0]);
+                final int max = val.getActualMaximum(aField[0]);
+                //Calculate the offset from the minimum allowed value
+                offset = val.get(aField[0]) - min;
+                //Set roundUp if this is more than half way between the minimum and maximum
+                roundUp = offset > ((max + min) / 2);
+                System.out.print(" -> 68");
+            } else {
+                System.out.print(" -> 66");
+            }
+            //We need to remove this field
+            if (offset != 0) {
+                System.out.print(" -> 69");
+                val.set(aField[0], val.get(aField[0]) - offset);
+                System.out.print(" -> 71");
+            } else {
+                System.out.print(" -> 70");
+            }
+        }
+        System.out.print(" -> 28");
+        throw new IllegalArgumentException("The field " + field + " is not supported");
+    }
