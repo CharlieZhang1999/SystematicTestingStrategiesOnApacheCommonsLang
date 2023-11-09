@@ -90,7 +90,7 @@ public class T7DateUtilsModifyWhiteBoxTest {
 
     @Test
     public void canCei1PMTo12AMByAMPM() {
-        calendar1.set(2002, Calendar.FEBRUARY, 3, 13, 10, 0);
+        calendar1.set(2002, Calendar.FEBRUARY, 3, 12, 10, 0);
         calendar1.set(Calendar.MILLISECOND, 0);
         Date date = DateUtils.ceiling(calendar1.getTime(), Calendar.AM_PM);
 
