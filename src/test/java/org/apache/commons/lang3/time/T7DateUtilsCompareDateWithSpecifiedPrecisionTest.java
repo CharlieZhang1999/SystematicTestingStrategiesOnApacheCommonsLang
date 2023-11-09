@@ -292,16 +292,12 @@ public class T7DateUtilsCompareDateWithSpecifiedPrecisionTest {
     }
 
     @Test
+    public void canTestComparisonInSecondforTwoDifferentDates(){
+        assertFalse(DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.SECOND));
+    }
+
+    @Test
     public void canTestComparisonInMilliesecondforTwoDifferentDates(){
         assertFalse(DateUtils.truncatedEquals(date_1, date_1_diff, Calendar.MILLISECOND));
     }
-
-
-
-
-
-
-
-
-
 }
