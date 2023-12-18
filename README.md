@@ -1,5 +1,8 @@
 # Team 7
 
+## Description
+This is a Super-Mutant Challenge in which we apply systematic spec-based, structural, and unit testing strategies to Apache Commons Lang library.
+A rival team is responsible for mutating the target code. We create the test plan, including both black-box tests and white-box tests. Eventually, we evaluate our test plans using the rival team's mutation and conduct the fault analysis and coverage analysis.
 
 ## Members
 
