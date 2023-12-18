@@ -16,15 +16,15 @@
 
 ## Docs
 
-- [Test Plan](https://docs.google.com/document/d/1cqeY3JRuNKcXXyiz6Qn229q7x0bpnvHsJJtEvwY_l5g)
+- [Test Plan](https://docs.google.com/document/d/1rzm4tgFnd33j7W5jCfytZu-qW-lNM0IuhrOCPAH9mV8/edit?usp=sharing)
 
-- [White Box Test Sheet](https://docs.google.com/spreadsheets/d/1AZCybQBo1rCgzekvzG533E8CLYLlzwu6wSultHubhpc/edit#gid=690192691)
+- [White Box Test Sheet](https://docs.google.com/spreadsheets/d/1CWpgjsPLiLEAya-gmFn1t9e1kGbFjCcBXSMEJoQhnw4/edit?usp=sharing)
 
-- [Mutation Sheet](https://docs.google.com/spreadsheets/d/1k7Yz3OSn3nktseqHQjh5-1MvdnFL0haJCJjaWX225xg/edit#gid=0)
+- [Mutation Sheet](https://docs.google.com/spreadsheets/d/1ezNNn7bx3quDSpp6Fepnbg70L7imGBqxH65Lhx2wtvE/edit?usp=sharing)
 
-- [Presentation](https://docs.google.com/presentation/d/1HQ0kP375IJ7kzYWVQK-u0qAMzb_YbHvZvs5Y3xvyfY8/edit?pli=1#slide=id.p)
+- [Presentation](https://docs.google.com/presentation/d/1Z472SYfB-kwkQgnjuyQoQ_bFV2bFkq94_i7DlFQiESw/edit?usp=sharing)
 
-- [Project Shared Board](https://docs.google.com/spreadsheets/d/1Vhd3tgtV3PP3b9xVShLIp9ZC0sAhp9oXFeUV5Gud770/edit#gid=1863369920)
+- [Project Shared Board](https://docs.google.com/spreadsheets/d/1d-UI-RH9hW803-nyy7LMLZhSRBvyr3v1AU0EOU3yjbk/edit?usp=sharing)
 
 ## Jacoco
 
